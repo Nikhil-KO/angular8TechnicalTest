@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class ToDoServiceService {
+
+  constructor() { }
+
+  getList() {
+    return [
+      {
+        "id": 1,
+        "label": "Kitchen Cleanup",
+        "description":  "Clean my dirty kitchen",
+        "category": "house",
+        "done": false
+      },
+      {
+        "id": 2,
+        "label": "Taxes",
+        "description":  "Start doing my taxes and contact my accountant jhon for advice",
+        "category": "bureaucracy",
+        "done": "22-10-2019"
+      }
+    ];
+  }
+}
