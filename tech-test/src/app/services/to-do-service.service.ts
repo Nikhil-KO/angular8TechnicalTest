@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { ToDo } from '../interfaces/to-do';
 
 @Injectable({
   providedIn: 'root'
@@ -6,24 +9,11 @@ import { Injectable } from '@angular/core';
 
 export class ToDoServiceService {
 
-  constructor() { }
+  readonly _serviceUrl: string = "http://localhost:3000/tasks"
 
-  getList() {
-    return [
-      {
-        "id": 1,
-        "label": "Kitchen Cleanup",
-        "description":  "Clean my dirty kitchen",
-        "category": "house",
-        "done": false
-      },
-      {
-        "id": 2,
-        "label": "Taxes",
-        "description":  "Start doing my taxes and contact my accountant jhon for advice",
-        "category": "bureaucracy",
-        "done": "22-10-2019"
-      }
-    ];
+  constructor(private _http: HttpClient) { }
+
+  getList(): Observable<ToDo[]> {
+    return this._http.get<ToDo[]>(this._serviceUrl);
   }
 }

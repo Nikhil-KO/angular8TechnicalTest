@@ -10,17 +10,16 @@ import { ToDo } from '../../interfaces/to-do'
 
 export class ToDoListComponent implements OnInit {
 
-  private _toDoList: ToDo[];
+  private _toDo: ToDo[];
+  
+  constructor(private _service : ToDoServiceService) { }
 
-  constructor(service : ToDoServiceService) {
-    this._toDoList = service.getList();
-  }
-
-  getList() {
-    return this._toDoList;
+  getList() : ToDo[] {
+    return this._toDo;
   }
 
   ngOnInit() {
+    this._service.getList().subscribe(data => this._toDo = data);
   }
 
 }
