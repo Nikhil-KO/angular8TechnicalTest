@@ -44,4 +44,9 @@ export class ToDoServiceService {
     let param: string = JSON.stringify(task);
     return this._http.patch<IToDo>(url, param, {headers: this.headers});
   }
+
+  deleteTask(id: number): Observable<any> {
+    let url: string = this._serviceUrl + "/" + id;
+    return this._http.delete(url, {headers: this.headers});
+  }
 }

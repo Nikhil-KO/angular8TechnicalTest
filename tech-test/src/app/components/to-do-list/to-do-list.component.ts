@@ -59,8 +59,14 @@ export class ToDoListComponent implements OnInit {
   }
 
   // delete a completed task
-  deleteTask(id: number): void {
-    console.log(id);
+  deleteTask(todo: IToDo): void {
+    this._service.deleteTask(todo.id).subscribe(res => {
+      const index = this._toDo.indexOf(todo);
+      if (index > -1)
+        this._toDo.splice(index, 1);
+    }, error => {
+      this.alertUser("Failed to delete task, please try again");
+    })
   }
 
   // mark completed task as todo
