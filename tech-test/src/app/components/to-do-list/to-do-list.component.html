@@ -12,19 +12,19 @@
       <div class="modal-body">
         <form class="newTaskForm">
           <div class="form-group">
-            <input type="text" class="form-control" id="newLabel" placeholder="Task label">
+            <input [(ngModel)]="newTask.label" name="taskLabel" type="text" class="form-control" placeholder="Task label">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="newDesc" placeholder="Description">
+            <input [(ngModel)]="newTask.description" name="taskLabel" type="text" class="form-control" type="text" class="form-control" placeholder="Description" >
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="newCate" placeholder="Category">
+            <input [(ngModel)]="newTask.category" name="taskLabel" type="text" class="form-control" type="text" class="form-control" placeholder="Category" >
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Add task</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelNew()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addTask()">Add task</button>
       </div>
     </div>
   </div>
@@ -59,7 +59,7 @@
         </td>
       </tr>
       <ng-container *ngFor="let item of getList()">
-        <tr *ngIf="!(item['hidden'] === true)">
+        <tr *ngIf="!(item['hidden'] === true)" class="toDoRow">
           <td>
             <div *ngIf="!(item['editing'] === true) else elseEditingLable">
               <div class="todoItem" (dblclick)="editToDo(item, true)">

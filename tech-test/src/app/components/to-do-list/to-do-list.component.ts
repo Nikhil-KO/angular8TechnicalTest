@@ -11,19 +11,42 @@ import { ToDoServiceService } from '../../services/to-do-service.service'
 export class ToDoListComponent implements OnInit {
 
   private _toDo: IToDo[];
-  
+  public newTask: IToDo;
+
   constructor(private _service : ToDoServiceService) { }
   
   ngOnInit() {
     this._service.getList().subscribe(data => this._toDo = data);
+    this.newTask = {} as IToDo;
+    this.newTask.done = false;
+    this.newTask.id = null;
+    this.cancelNew();
   }
 
   getList(): IToDo[] {
     return this._toDo;
   }
 
-  addTask(newTask: IToDo): void {
-    console.log(newTask);
+  alertUser(msg: string): void {
+    alert(msg);
+  }
+
+  cancelNew(): void {
+    this.newTask.label = "";
+    this.newTask.description = "";
+    this.newTask.category = "";
+  }
+
+  addTask(): void {
+    if (this.newTask.label === "") {
+      this.alertUser("Please provide atleast a label for the task");
+      return;
+    }
+    this._service.addTask(this.newTask).subscribe(res => {
+      this._toDo.push(res);
+    }, error => {
+      this.alertUser("Failed to add new task");
+    });
   }
 
   markDoneTask(todo: IToDo):void {
@@ -31,7 +54,7 @@ export class ToDoListComponent implements OnInit {
     this._service.markDone(id).subscribe(res => {
       todo.done = res.done;
     }, error => {
-      alert("Something went wrong marking task as complete");
+      this.alertUser("Something went wrong marking task as complete");
     });    
   }
 
@@ -49,7 +72,7 @@ export class ToDoListComponent implements OnInit {
         }
       });
     }, error => {
-      alert("Something went wrong unmarking task");
+      this.alertUser("Something went wrong unmarking task");
     });  
   }
 
@@ -66,7 +89,7 @@ export class ToDoListComponent implements OnInit {
     this._service.updateTask(todo).subscribe(res => {
       todo = res;
     }, error => {
-      alert("Failed to update task");
+      this.alertUser("Failed to update task");
     });
   }
 

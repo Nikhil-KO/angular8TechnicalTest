@@ -27,10 +27,10 @@ export class ToDoServiceService {
     return this._http.patch<IToDo>(url, param, {headers: this.headers});
   }
 
-  // TODO
-  addTask(id: number, task: IToDo): void {
-    let param: string = JSON.stringify(task);
-    this._http.post(this._serviceUrl, param, {headers: this.headers});
+  addTask(newTask: IToDo): Observable<IToDo> {
+    let param: string = JSON.stringify(newTask);
+    console.log(param);
+    return this._http.post<IToDo>(this._serviceUrl, param, {headers: this.headers});
   }
 
   undoTask(id:number): Observable<IToDo> {
