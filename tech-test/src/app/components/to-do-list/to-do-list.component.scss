@@ -14,6 +14,7 @@
 
 .taskDone:hover div.taskDoneDate {
     visibility: hidden;
+    position: absolute;
 }
 
 .taskDone:hover button.taskDoneButton {
