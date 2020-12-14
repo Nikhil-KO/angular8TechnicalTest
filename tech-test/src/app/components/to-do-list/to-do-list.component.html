@@ -109,7 +109,7 @@
             <ng-template #elseDone>
               <div class="taskDone">
                 <div class="taskDoneDate"> {{item['done'] }} </div>
-                <button type="button" class="btn btn-warning taskDoneButton" (click)="undoTask(item['id'])">Un-do</button>
+                <button type="button" class="btn btn-warning taskDoneButton" (click)="undoTask(item)">Un-do</button>
                 <button type="button" class="btn btn-danger taskDoneButton" (click)="deleteTask(item)">Delete</button>
               </div>
             </ng-template>

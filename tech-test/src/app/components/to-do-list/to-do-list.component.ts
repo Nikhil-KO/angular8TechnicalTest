@@ -70,13 +70,10 @@ export class ToDoListComponent implements OnInit {
   }
 
   // mark completed task as todo
-  undoTask(id: number): void {
+  undoTask(todo: IToDo): void {
+    const id = todo.id;
     this._service.undoTask(id).subscribe(res => {
-      this._toDo.forEach(element => {
-        if (element.id === id) {
-          element.done = res.done;
-        }
-      });
+      todo.done = res.done;
     }, error => {
       this.alertUser("Something went wrong unmarking task");
     });  
@@ -91,7 +88,6 @@ export class ToDoListComponent implements OnInit {
 
   // update a key for given task id
   updateTask(todo: IToDo): void {
-    console.log(todo);
     this._service.updateTask(todo).subscribe(res => {
       todo = res;
     }, error => {
