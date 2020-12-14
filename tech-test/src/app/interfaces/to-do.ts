@@ -4,4 +4,5 @@ export interface ToDo {
     description: string;
     category: string;
     done;
+    hidden?: boolean;
 }
