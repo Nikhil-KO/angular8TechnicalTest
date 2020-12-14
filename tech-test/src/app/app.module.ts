@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
 import { ToDoServiceService } from './services/to-do-service.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,13 @@ import { ToDoServiceService } from './services/to-do-service.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     HttpClient,
-    ToDoServiceService
+    ToDoServiceService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
