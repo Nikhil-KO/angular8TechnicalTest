@@ -60,14 +60,53 @@
       </tr>
       <ng-container *ngFor="let item of getList()">
         <tr *ngIf="!(item['hidden'] === true)">
-          <td>{{ item['label'] }}</td>
-          <td>{{ item['description'] }}</td>
-          <td>{{ item['category'] }}</td>
           <td>
-            <div *ngIf="item['done'] === false else elseBlock">
-              <input type="checkbox">
+            <div *ngIf="!(item['editing'] === true) else elseEditingLable">
+              <div class="todoItem" (dblclick)="editToDo(item, true)">
+                {{ item['label'] }}
+              </div>
             </div>
-            <ng-template #elseBlock>
+            <ng-template #elseEditingLable>
+              <div class="todoEditInput">
+                <input type="text" [(ngModel)]="item.label" 
+                  (blur)="editToDo(item, false)"
+                  (keyup.esc)="editToDo(item, false)">
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <div *ngIf="!(item['editing'] === true) else elseEditingDesc">
+              <div class="todoItem" (dblclick)="editToDo(item, true)">
+                {{ item['description'] }}
+              </div>
+            </div>
+            <ng-template #elseEditingDesc>
+              <div class="todoEditInput">
+                <input type="text" [(ngModel)]="item.description" 
+                  (blur)="editToDo(item, false)"
+                  (keyup.esc)="editToDo(item, false)">
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <div *ngIf="!(item['editing'] === true) else elseEditingCate">
+              <div class="todoItem" (dblclick)="editToDo(item, true)">
+                {{ item['category'] }}
+              </div>
+            </div>
+            <ng-template #elseEditingCate>
+              <div class="todoEditInput">
+                <input type="text" [(ngModel)]="item.category" 
+                  (blur)="editToDo(item, false)"
+                  (keyup.esc)="editToDo(item, false)">
+              </div>
+            </ng-template>
+          </td>
+          <td>
+            <div *ngIf="item['done'] === false else elseDone">
+              <input type="checkbox" (click)="markDoneTask(item)">
+            </div>
+            <ng-template #elseDone>
               <div class="taskDone">
                 <div class="taskDoneDate"> {{item['done'] }} </div>
                 <button type="button" class="btn btn-warning taskDoneButton" (click)="undoTask(item['id'])">Un-do</button>

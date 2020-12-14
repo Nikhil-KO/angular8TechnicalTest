@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IToDo } from '../../interfaces/to-do'
 import { ToDoServiceService } from '../../services/to-do-service.service'
-import { ToDo } from '../../interfaces/to-do'
 
 @Component({
   selector: 'app-to-do-list',
@@ -10,7 +10,7 @@ import { ToDo } from '../../interfaces/to-do'
 
 export class ToDoListComponent implements OnInit {
 
-  private _toDo: ToDo[];
+  private _toDo: IToDo[];
   
   constructor(private _service : ToDoServiceService) { }
   
@@ -18,12 +18,21 @@ export class ToDoListComponent implements OnInit {
     this._service.getList().subscribe(data => this._toDo = data);
   }
 
-  getList(): ToDo[] {
+  getList(): IToDo[] {
     return this._toDo;
   }
 
-  addTask(newTask: ToDo): void {
+  addTask(newTask: IToDo): void {
     console.log(newTask);
+  }
+
+  markDoneTask(todo: IToDo):void {
+    let id: number = todo.id
+    this._service.markDone(id).subscribe(res => {
+      todo.done = res.done;
+    }, error => {
+      alert("Something went wrong marking task as complete");
+    });    
   }
 
   // delete a completed task
@@ -33,12 +42,32 @@ export class ToDoListComponent implements OnInit {
 
   // mark completed task as todo
   undoTask(id: number): void {
-    console.log(id)
+    this._service.undoTask(id).subscribe(res => {
+      this._toDo.forEach(element => {
+        if (element.id === id) {
+          element.done = res.done;
+        }
+      });
+    }, error => {
+      alert("Something went wrong unmarking task");
+    });  
+  }
+
+  editToDo(todo: IToDo, state: boolean) {
+    todo.editing = state;
+    if (!state) {
+      this.updateTask(todo);
+    }    
   }
 
   // update a key for given task id
-  updateTask(id: number, key: string, update: any): void {
-    console.log(id, key, update);
+  updateTask(todo: IToDo): void {
+    console.log(todo);
+    this._service.updateTask(todo).subscribe(res => {
+      todo = res;
+    }, error => {
+      alert("Failed to update task");
+    });
   }
 
   testFunction() {
