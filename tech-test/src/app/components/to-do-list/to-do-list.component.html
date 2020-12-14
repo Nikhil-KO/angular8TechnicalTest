@@ -1,5 +1,82 @@
-<ul>
-  <li *ngFor="let item of getList()">
-    {{ item['id'] }}, {{ item['label'] }}, {{ item['description'] }}
-  </li>
-</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="newTaskForm">
+          <div class="form-group">
+            <input type="text" class="form-control" id="newLabel" placeholder="Task label">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="newDesc" placeholder="Description">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="newCate" placeholder="Category">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Add task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="toDoControls">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Add Task
+    </button>
+    <button type="button" class="btn btn-success" (click)="testFunction()">
+      Test Button
+    </button>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Label</th>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Done</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" placeholder="search"></td>
+        <td><input type="text" placeholder="search"></td>
+        <td><input type="text" placeholder="search"></td>
+        <td>
+          <input type="checkbox" class="custom-control-input" id="hideDoneSwitch">
+          <label class="custom-control-label" for="hideDoneSwitch">Hide Done</label>
+        </td>
+      </tr>
+      <ng-container *ngFor="let item of getList()">
+        <tr *ngIf="!(item['hidden'] === true)">
+          <td>{{ item['label'] }}</td>
+          <td>{{ item['description'] }}</td>
+          <td>{{ item['category'] }}</td>
+          <td>
+            <div *ngIf="item['done'] === false else elseBlock">
+              <input type="checkbox">
+            </div>
+            <ng-template #elseBlock>
+              <div class="taskDone">
+                <div class="taskDoneDate"> {{item['done'] }} </div>
+                <button type="button" class="btn btn-warning taskDoneButton" (click)="undoTask(item['id'])">Un-do</button>
+                <button type="button" class="btn btn-danger taskDoneButton">Delete</button>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

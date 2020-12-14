@@ -1,0 +1,21 @@
+.toDoControls{
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.taskDone {
+    position: absolute;
+}
+
+.taskDoneButton {
+    margin-right: 15px;
+    visibility: hidden;
+}
+
+.taskDone:hover div.taskDoneDate {
+    visibility: hidden;
+}
+
+.taskDone:hover button.taskDoneButton {
+    visibility: visible;
+}
