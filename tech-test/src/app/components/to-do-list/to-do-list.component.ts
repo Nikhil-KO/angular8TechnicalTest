@@ -12,6 +12,8 @@ export class ToDoListComponent implements OnInit {
 
   private _toDo: IToDo[];
   public newTask: IToDo;
+  public searchTask: IToDo;
+  public hideComplete: boolean;
 
   constructor(private _service : ToDoServiceService) { }
   
@@ -21,6 +23,11 @@ export class ToDoListComponent implements OnInit {
     this.newTask = {} as IToDo;
     this.newTask.done = false;
     this.newTask.id = null;
+    this.searchTask = {} as IToDo;
+    this.searchTask.label = "";
+    this.searchTask.description = "";
+    this.searchTask.category = "";
+    this.hideComplete = false;
     this.cancelNew();
   }
 
@@ -94,5 +101,39 @@ export class ToDoListComponent implements OnInit {
     , error =>
       this.alertUser("Failed to update task")
     );
+  }
+
+  search(): void {
+    const label:string = this.searchTask.label.toLowerCase();
+    const description:string = this.searchTask.description.toLowerCase();
+    const category:string = this.searchTask.category.toLowerCase();
+    this._toDo.forEach(element => {
+      if (element.label.toLowerCase().includes(label) && 
+        element.description.toLowerCase().includes(description) && 
+        element.category.toLowerCase().includes(category)) {
+          element.hidden = false;
+        } else {
+          element.hidden = true;
+        }
+    });
+  }
+
+  hideDone():void {
+    console.log(this.hideComplete);
+    
+    if (!this.hideComplete) {
+      this._toDo.forEach(element => {
+        if (!element.hidden) {
+          if (!element.done === false) {
+            element.hidden = true;
+          }
+        }
+      });
+    } else {
+      this._toDo.forEach(element => {
+        element.hidden = false;
+      });
+      this.search();
+    }
   }
 }

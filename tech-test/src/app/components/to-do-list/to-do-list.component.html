@@ -47,11 +47,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><input type="text" placeholder="search"></td>
-        <td><input type="text" placeholder="search"></td>
-        <td><input type="text" placeholder="search"></td>
         <td>
-          <input type="checkbox" class="custom-control-input" id="hideDoneSwitch">
+          <input [(ngModel)]="searchTask.label" type="text" class="form-control" (keyup)="search()" placeholder="search">
+        </td>
+        <td>
+          <input [(ngModel)]="searchTask.description" type="text" class="form-control" (keyup)="search()" placeholder="search">
+        </td>
+        <td>
+          <input [(ngModel)]="searchTask.category" type="text" class="form-control" (keyup)="search()" placeholder="search">
+        </td>
+        <td class="completeFilter">
+          <input type="checkbox" id="hideDoneSwitch" class="custom-control-input" 
+            [(ngModel)]="hideComplete" [ngModelOptions]="{standalone: true}"
+            (click)="hideDone()"/>
           <label class="custom-control-label" for="hideDoneSwitch">Hide Done</label>
         </td>
       </tr>
