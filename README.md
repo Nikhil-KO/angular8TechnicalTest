@@ -1,3 +1,8 @@
+# My notes
+This was my first time learning Angular, definitely glad I decided to do so, coming from flask and jinja, this was a nice step up.
+I have given an interface for the ToDos and put all the services in the respective class, and used Dependency injection for the used services.
+I didn't get to run the unit tests but I wrote some to show I understood the basis.
+
 # Angular Technical Test
 We've designed a small remote technical test, that is open ended. You should be able to make choices and assumptions without guidance. We're interested in seeing how you think and architect out the code. You should not spend more than 3 hours on this so think strategically about what you want to show.
 
