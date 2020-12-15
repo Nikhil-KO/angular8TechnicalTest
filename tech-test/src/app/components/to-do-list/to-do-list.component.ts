@@ -10,10 +10,10 @@ import { ToDoService } from '../../services/to-do-service.service'
 
 export class ToDoListComponent implements OnInit {
 
-  private _toDo: IToDo[];
-  public newTask: IToDo;
-  public searchTask: IToDo;
-  public hideComplete: boolean;
+  private _toDo: IToDo[]; // tasks
+  public newTask: IToDo; // input form
+  public searchTask: IToDo; // search bar
+  public hideComplete: boolean; // toggle 
 
   constructor(private _service : ToDoService) { }
   
@@ -35,16 +35,19 @@ export class ToDoListComponent implements OnInit {
     return this._toDo;
   }
 
+  // not enough time, but this would be nicer as a modal/popup
   alertUser(msg: string): void {
     alert(msg);
   }
 
+  // resets the form
   cancelNew(): void {
     this.newTask.label = "";
     this.newTask.description = "";
     this.newTask.category = "";
   }
 
+  // add task through service
   addTask(): void {
     if (this.newTask.label === "") {
       this.alertUser("Please provide atleast a label for the task");
@@ -57,9 +60,9 @@ export class ToDoListComponent implements OnInit {
     );
   }
 
+  // mark task as compeleted, service sets the date and confirms its
   markDoneTask(todo: IToDo):void {
-    let id: number = todo.id
-    this._service.markDone(id).subscribe(res =>
+    this._service.markDone(todo.id).subscribe(res =>
       todo.done = res.done
     , error =>
       this.alertUser("Something went wrong marking task as complete")
@@ -87,6 +90,7 @@ export class ToDoListComponent implements OnInit {
     );
   }
 
+  // toggle task being in edit state
   editToDo(todo: IToDo, state: boolean) {
     todo.editing = state;
     if (!state) {
@@ -103,6 +107,7 @@ export class ToDoListComponent implements OnInit {
     );
   }
 
+  // search based on input parameters
   search(): void {
     const label:string = this.searchTask.label.toLowerCase();
     const description:string = this.searchTask.description.toLowerCase();
@@ -118,22 +123,19 @@ export class ToDoListComponent implements OnInit {
     });
   }
 
+  // hide compeleted task
   hideDone():void {
-    console.log(this.hideComplete);
-    
     if (!this.hideComplete) {
       this._toDo.forEach(element => {
-        if (!element.hidden) {
-          if (!element.done === false) {
+          if (!element.done === false) { // done tasks
             element.hidden = true;
           }
-        }
       });
     } else {
       this._toDo.forEach(element => {
         element.hidden = false;
       });
-      this.search();
+      this.search(); // still need to apply any filter on right now
     }
   }
 }

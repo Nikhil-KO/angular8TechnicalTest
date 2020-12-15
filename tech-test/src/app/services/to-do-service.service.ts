@@ -21,32 +21,32 @@ export class ToDoService {
   }
 
   markDone(id: number): Observable<IToDo> {
-    let doneDate = this._datePipe.transform(new Date(), 'dd-MM-yyyy');
-    let url: string = this._serviceUrl + "/" + id ;
-    let param: string = JSON.stringify({"done": doneDate});
+    const doneDate = this._datePipe.transform(new Date(), 'dd-MM-yyyy');
+    const url: string = this._serviceUrl + "/" + id ;
+    const param: string = JSON.stringify({"done": doneDate});
     return this._http.patch<IToDo>(url, param, {headers: this.headers});
   }
 
   addTask(newTask: IToDo): Observable<IToDo> {
-    let param: string = JSON.stringify(newTask);
+    const param: string = JSON.stringify(newTask);
     console.log(param);
     return this._http.post<IToDo>(this._serviceUrl, param, {headers: this.headers});
   }
 
   undoTask(id:number): Observable<IToDo> {
-    let url: string = this._serviceUrl + "/" + id;
-    let param: string = JSON.stringify({"done": false});
+    const url: string = this._serviceUrl + "/" + id;
+    const param: string = JSON.stringify({"done": false});
     return this._http.patch<IToDo>(url, param, {headers: this.headers});
   }
 
   updateTask(task: IToDo): Observable<IToDo> {
-    let url: string = this._serviceUrl + "/" + task['id'];
-    let param: string = JSON.stringify(task);
+    const url: string = this._serviceUrl + "/" + task['id'];
+    const param: string = JSON.stringify(task);
     return this._http.patch<IToDo>(url, param, {headers: this.headers});
   }
 
   deleteTask(id: number): Observable<any> {
-    let url: string = this._serviceUrl + "/" + id;
+    const url: string = this._serviceUrl + "/" + id;
     return this._http.delete(url, {headers: this.headers});
   }
 }
