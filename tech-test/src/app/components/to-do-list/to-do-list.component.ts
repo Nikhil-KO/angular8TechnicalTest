@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IToDo } from '../../interfaces/to-do'
-import { ToDoServiceService } from '../../services/to-do-service.service'
+import { ToDoService } from '../../services/to-do-service.service'
 
 @Component({
   selector: 'app-to-do-list',
@@ -15,7 +15,7 @@ export class ToDoListComponent implements OnInit {
   public searchTask: IToDo;
   public hideComplete: boolean;
 
-  constructor(private _service : ToDoServiceService) { }
+  constructor(private _service : ToDoService) { }
   
   ngOnInit() {
     this._service.getList().subscribe(data => this._toDo = data, 

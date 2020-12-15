@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
-import { ToDoServiceService } from './services/to-do-service.service';
+import { ToDoService } from './services/to-do-service.service';
 import { DatePipe } from '@angular/common';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [
     HttpClient,
-    ToDoServiceService,
+    ToDoService,
     DatePipe
   ],
   bootstrap: [AppComponent]

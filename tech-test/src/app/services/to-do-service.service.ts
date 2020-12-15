@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
   providedIn: 'root'
 })
 
-export class ToDoServiceService {
+export class ToDoService {
 
   readonly _serviceUrl: string = "http://localhost:3000/tasks"
   readonly headers: HttpHeaders = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
